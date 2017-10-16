@@ -136,6 +136,9 @@ public class RectangleVenue extends Venue {
         return selectedSeats;
     }
 
+    /**
+     * Breadth-first movement to the next closest seats.
+     */
     private void traverseFrom(Point curSeat, HashSet<Point> selectedSeats, int seatsNeeded) {
         Queue<Point> queue = new LinkedList<Point>();
         queue.add(curSeat);
@@ -153,14 +156,12 @@ public class RectangleVenue extends Venue {
             if (curCol < bestSeat.y) {
                 if (curRow - 1 >= 0 && !seats[curRow - 1][curCol] && !selectedSeats.contains(new Point(curRow - 1, curCol))) {
                     // move up one row
-//                    queue.add(new Point(curRow - 1, curCol));
                     embarkFrom(new Point(curRow - 1, curCol), selectedSeats, seatsNeeded);
                     if (selectedSeats.size() == seatsNeeded)
                         return;
                 }
                 if (!seats[curRow][curCol+1] && !selectedSeats.contains(new Point(curRow, curCol + 1))) {
                     // move to the right
-//                    queue.add(new Point(curRow, curCol + 1));
                     embarkFrom(new Point(curRow, curCol + 1), selectedSeats, seatsNeeded);
                     if (selectedSeats.size() == seatsNeeded)
                         return;
@@ -209,14 +210,12 @@ public class RectangleVenue extends Venue {
             } else if (curCol > bestSeat.y) {
                 if (curRow - 1 >= 0 && !seats[curRow - 1][curCol] && !selectedSeats.contains(new Point(curRow - 1, curCol))) {
                     // move up one row
-//                    queue.add(new Point(curRow - 1, curCol));
                     embarkFrom(new Point(curRow - 1, curCol), selectedSeats, seatsNeeded);
                     if (selectedSeats.size() == seatsNeeded)
                         return;
                 }
                 if (curCol - 1 >= 0 && !seats[curRow][curCol - 1] && !selectedSeats.contains(new Point(curRow, curCol - 1))) {
                     // move to the left
-//                    queue.add(new Point(curRow, curCol - 1));
                     embarkFrom(new Point(curRow, curCol - 1), selectedSeats, seatsNeeded);
                     if (selectedSeats.size() == seatsNeeded)
                         return;
@@ -233,6 +232,9 @@ public class RectangleVenue extends Venue {
         }
     }
 
+    /**
+     * Depth-first movement to the next closest seats.
+     */
     private void embarkFrom(Point curSeat, HashSet<Point> selectedSeats, int seatsNeeded) {
         selectedSeats.add(curSeat);
 
